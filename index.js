@@ -92,7 +92,53 @@ about/_partials/footer.html
 */
 
 function find (dir, extension) {
+	var output = [];
 
+	// Default to .html for the extension if it is not provided.
+	extension = extension || ".html";
+
+	// We only want files that end with the correct extension
+	function extensionMatches (filename) {
+		var extname = path.extname(filename);
+		if (extname) {
+			return extname === extension;
+		}
+		return true;
+	}
+
+	// Ignore files or folders that start with the . or _ characters.
+	function fileIsPublic (filename) {
+		return filename[0] !== "_" && filename[0] !== ".";
+	}
+
+	// If the path is a directory, recurse this method on that path
+	// and add the output to our output.
+
+	// If the path is a file, create a File object and add it to the
+	// output array.
+	function handleDirectoryOrFile (filename) {
+		var filepath = path.join(dir, filename);
+
+		if (fs.statSync(filepath).isDirectory()) {
+			find(filepath, extension).forEach(addFileToOutput);
+		} else {
+			addFileToOutput(new File(filepath));
+		}
+	}
+
+	// Add a file to the output
+	function addFileToOutput (file) {
+		output.push(file);
+	}
+
+	// Kick it all off, filtering out undesired files and adding found
+	// files to the output array.
+	fs.readdirSync(dir)
+		.filter(fileIsPublic)
+		.filter(extensionMatches)
+		.forEach(handleDirectoryOrFile);
+
+	return output;
 }
 
 /*
