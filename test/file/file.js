@@ -48,5 +48,27 @@ exports.file = {
 		t.equal(file.data.one, 3, "File#addData should be able to handle a null data set.");
 
 		t.done();
+	},
+
+	"destination html" : function (t) {
+		var index      = new File('index.html'),
+			indexSlash = new File('/index.html'),
+			aboutIndex = new File('about/index.html'),
+			about      = new File('about.html'),
+			aboutSlash = new File('/about.html');
+
+		t.equal(     index.dest('path'), 'path/index.html');
+		t.equal(indexSlash.dest('path'), 'path/index.html');
+		t.equal(aboutIndex.dest('path'), 'path/about/index.html');
+		t.equal(     about.dest('path'), 'path/about.html');
+		t.equal(aboutSlash.dest('path'), 'path/about.html');
+
+		t.equal(     index.dest('path', true), 'path/index.html');
+		t.equal(indexSlash.dest('path', true), 'path/index.html');
+		t.equal(aboutIndex.dest('path', true), 'path/about/index.html');
+		t.equal(     about.dest('path', true), 'path/about/index.html');
+		t.equal(aboutSlash.dest('path', true), 'path/about/index.html');
+
+		t.done();
 	}
 };

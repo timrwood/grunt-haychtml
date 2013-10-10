@@ -1,3 +1,5 @@
+var fs = require("fs"),
+	path = require("path");
 
 /****************************  File  *******************************
 
@@ -50,7 +52,17 @@ about/index.html > about/index.html
 */
 
 File.prototype.dest = function (basePath, stripExtension) {
+	var dirname = path.dirname(path.join(basePath, this.src)),
+		basename = path.basename(this.src, path.extname(this.src));
 
+	if (stripExtension) {
+		if (basename === "index") {
+			basename = "";
+		}
+		return path.join(dirname, basename, 'index.html');
+	}
+
+	return path.join(dirname, basename + '.html');
 };
 
 
