@@ -19,7 +19,8 @@
         }
     ],
     "dependencies" : {
-        "consolidate" : "latest"
+        "consolidate" : "latest",
+        "mkdirp"      : "latest"
     },
     "devDependencies" : {
         "grunt"                   : "latest",

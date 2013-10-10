@@ -8,21 +8,25 @@ exports.find = {
 			destDirname = path.join(__dirname, 'swig/dest'),
 			expectedDirname = path.join(__dirname, 'swig/expected');
 
-		t.expect(1);
+		t.expect(6);
 
 		function testFile (filename) {
-			var destContents = fs.readFileSync(path.join(destDirname, filename), 'utf8'),
-				expectedContents = fs.readFileSync(path.join(expectedDirname, filename), 'utf8');
+			var destPath = path.join(destDirname, filename),
+				expectedPath = path.join(expectedDirname, filename);
+
+			t.ok(fs.existsSync(destPath), "Destination file should exist.");
+			t.ok(fs.existsSync(expectedPath), "Expected file should exist.");
 
 			t.deepEqual(
-				destContents.split('\n'),
-				expectedContents.split('\n'),
+				fs.readFileSync(destPath, 'utf8').split('\n'),
+				fs.readFileSync(expectedPath, 'utf8').split('\n'),
 				filename + " should match the expected output."
 			);
 		}
 
 		function done () {
 			testFile("index.html");
+			testFile("about/index.html");
 
 			t.done();
 		}

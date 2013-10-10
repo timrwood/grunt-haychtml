@@ -1,5 +1,6 @@
 var fs = require("fs"),
 	path = require("path"),
+	mkdirp = require("mkdirp"),
 	consolidate = require('consolidate');
 
 /****************************  File  *******************************
@@ -210,7 +211,10 @@ function alone (config) {
 			throw err;
 		}
 
-		fs.writeFileSync(file.dest(config.dest, stripExtension), data, 'utf8');
+		var dest = file.dest(config.dest, stripExtension);
+
+		mkdirp.sync(path.dirname(dest));
+		fs.writeFileSync(dest, data, 'utf8');
 
 		checkRemaining();
 	}
