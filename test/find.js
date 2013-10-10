@@ -1,11 +1,10 @@
 var find = require("../index").find,
 	path = require("path");
 
-function keysFromFiles (files, dirname) {
+function keysFromFiles (files) {
 	var keys = {};
 	files.forEach(function (file) {
-		var relativePath = path.relative(dirname, file.src);
-		keys[relativePath] = file;
+		keys[file.src] = file;
 	});
 	return keys;
 }
@@ -14,7 +13,7 @@ exports.find = {
 	"find html" : function (t) {
 		var dirname = path.join(__dirname, 'templates'),
 			files = find(dirname),
-			keys = keysFromFiles(files, dirname);
+			keys = keysFromFiles(files);
 
 		t.notEqual(keys['public.html'], undefined, "Should include root level html files");
 		t.equal(keys['public.jade'], undefined, "Should not include root level jade files");
@@ -49,7 +48,7 @@ exports.find = {
 	"find jade" : function (t) {
 		var dirname = path.join(__dirname, 'templates'),
 			files = find(dirname, ".jade"),
-			keys = keysFromFiles(files, dirname);
+			keys = keysFromFiles(files);
 
 		t.equal(keys['public.html'], undefined, "Should not include root level html files");
 		t.notEqual(keys['public.jade'], undefined, "Should include root level jade files");
@@ -61,7 +60,7 @@ exports.find = {
 	"find swig" : function (t) {
 		var dirname = path.join(__dirname, 'templates'),
 			files = find(dirname, ".swig"),
-			keys = keysFromFiles(files, dirname);
+			keys = keysFromFiles(files);
 
 		t.equal(keys['public.html'], undefined, "Should not include root level html files");
 		t.equal(keys['public.jade'], undefined, "Should not include root level jade files");

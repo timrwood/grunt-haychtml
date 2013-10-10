@@ -1,5 +1,6 @@
 var fs = require("fs"),
-	path = require("path");
+	path = require("path"),
+	consolidate = require('consolidate');
 
 /****************************  File  *******************************
 
@@ -91,11 +92,14 @@ _includes/post.html
 about/_partials/footer.html
 */
 
-function find (dir, extension) {
+function find (dir, extension, recursePath) {
 	var output = [];
 
 	// Default to .html for the extension if it is not provided.
 	extension = extension || ".html";
+
+	// If we are on the first recursion, default to an empty recurse path.
+	recursePath = recursePath || "";
 
 	// We only want files that end with the correct extension
 	function extensionMatches (filename) {
@@ -117,12 +121,13 @@ function find (dir, extension) {
 	// If the path is a file, create a File object and add it to the
 	// output array.
 	function handleDirectoryOrFile (filename) {
-		var filepath = path.join(dir, filename);
+		var absolutePath = path.join(dir, recursePath, filename),
+			relativePath = path.join(recursePath, filename);
 
-		if (fs.statSync(filepath).isDirectory()) {
-			find(filepath, extension).forEach(addFileToOutput);
+		if (fs.statSync(absolutePath).isDirectory()) {
+			find(dir, extension, relativePath).forEach(addFileToOutput);
 		} else {
-			addFileToOutput(new File(filepath));
+			addFileToOutput(new File(relativePath));
 		}
 	}
 
@@ -133,7 +138,7 @@ function find (dir, extension) {
 
 	// Kick it all off, filtering out undesired files and adding found
 	// files to the output array.
-	fs.readdirSync(dir)
+	fs.readdirSync(path.join(dir, recursePath))
 		.filter(fileIsPublic)
 		.filter(extensionMatches)
 		.forEach(handleDirectoryOrFile);
@@ -142,13 +147,43 @@ function find (dir, extension) {
 }
 
 /*
-Given an array of File objects, a destination base path, a global data
+Given a source base path, a destination base path, a global data
 object to apply to each file, and a template rendering engine, render
 all files to their destination.
 */
 
-function render (files, dest, data, engine) {
+function render (src, dest, data, engine, cb) {
+	var files = find(src),
+		remaining = files.length;
 
+	function checkRemaining () {
+		remaining--;
+		if (!remaining) {
+			cb();
+		}
+	}
+
+	function saveFile (file, err, data) {
+		if (err) {
+			throw err;
+		}
+
+		fs.writeFileSync(file.dest(dest), data, 'utf8');
+
+		checkRemaining();
+	}
+
+	function renderFile (file) {
+		file.addData(data);
+
+		consolidate[engine](
+			path.join(src, file.src),
+			file.data,
+			saveFile.bind(null, file)
+		);
+	}
+
+	files.forEach(renderFile);
 }
 
 /*

@@ -1,1 +1,3 @@
 node_modules
+test/swig/dest
+test/jade/dest
