@@ -6,10 +6,7 @@ exports.find = {
 	"render swig" : function (t) {
 		var srcDirname = path.join(__dirname, 'swig/src'),
 			destDirname = path.join(__dirname, 'swig/dest'),
-			expectedDirname = path.join(__dirname, 'swig/expected'),
-			globalData = {
-				SOMEKEY : "somevalue"
-			};
+			expectedDirname = path.join(__dirname, 'swig/expected');
 
 		t.expect(1);
 
@@ -30,6 +27,14 @@ exports.find = {
 			t.done();
 		}
 
-		alone.render(srcDirname, destDirname, globalData, "swig", done);
+		alone({
+			src : srcDirname,
+			dest : destDirname,
+			data : {
+				SOMEKEY : "somevalue"
+			},
+			engine : "swig",
+			done : done
+		});
 	}
 };

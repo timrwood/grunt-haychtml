@@ -147,46 +147,6 @@ function find (dir, extension, recursePath) {
 }
 
 /*
-Given a source base path, a destination base path, a global data
-object to apply to each file, and a template rendering engine, render
-all files to their destination.
-*/
-
-function render (src, dest, data, engine, cb) {
-	var files = find(src),
-		remaining = files.length;
-
-	function checkRemaining () {
-		remaining--;
-		if (!remaining) {
-			cb();
-		}
-	}
-
-	function saveFile (file, err, data) {
-		if (err) {
-			throw err;
-		}
-
-		fs.writeFileSync(file.dest(dest), data, 'utf8');
-
-		checkRemaining();
-	}
-
-	function renderFile (file) {
-		file.addData(data);
-
-		consolidate[engine](
-			path.join(src, file.src),
-			file.data,
-			saveFile.bind(null, file)
-		);
-	}
-
-	files.forEach(renderFile);
-}
-
-/*
 This is the main entry point for external use.
 
 * config.src
@@ -203,10 +163,12 @@ more info. Defaults to true.
 The source files extenstion. This defaults to .html, but can be changed
 depending on the type of template engine used (e.g. .jade)
 
+* config.data
+Global data to be passed to each template.
+
 * config.engine
 The template engine to use to render the files.
 The template engine must be supported by consolidate.
-
 github.com/visionmedia/consolidate.js
 
 When using a template engine, you should also add that to your package.json
@@ -231,6 +193,39 @@ function alone (config) {
 			"Set config.engine to a consolidate.js supported template engine. " +
 			"You may also want to add it to your package.json.");
 	}
+
+	var files = find(config.src, config.extension),
+		remaining = files.length,
+		stripExtension = config.stripExtension !== false;
+
+	function checkRemaining () {
+		remaining--;
+		if (!remaining && config.done) {
+			config.done();
+		}
+	}
+
+	function saveFile (file, err, data) {
+		if (err) {
+			throw err;
+		}
+
+		fs.writeFileSync(file.dest(config.dest, stripExtension), data, 'utf8');
+
+		checkRemaining();
+	}
+
+	function renderFile (file) {
+		file.addData(config.data);
+
+		consolidate[config.engine](
+			path.join(config.src, file.src),
+			file.data,
+			saveFile.bind(null, file)
+		);
+	}
+
+	files.forEach(renderFile);
 }
 
 /*
@@ -239,4 +234,3 @@ Export everything.
 module.exports = alone;
 alone.File = File;
 alone.find = find;
-alone.render = render;
