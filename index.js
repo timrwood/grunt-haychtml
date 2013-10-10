@@ -195,6 +195,14 @@ function alone (config, cb) {
 			"You may also want to add it to your package.json.");
 	}
 
+	try {
+		require(config.engine);
+	} catch (e) {
+		throw new Error("The template engine \"" + config.engine + "\" was not found. " +
+			"Did you forget to install it?\n\n    npm install --save-dev " +
+			config.engine + '\n');
+	}
+
 	var files = find(config.src, config.extension),
 		remaining = files.length,
 		stripExtension = config.stripExtension !== false;

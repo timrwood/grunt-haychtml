@@ -39,5 +39,34 @@ exports.find = {
 			},
 			engine : "swig"
 		}, done);
+	},
+
+	"throwing errors" : function (t) {
+		t.throws(function () {
+			alone({});
+		}, "Missing a source should throw an error");
+
+		t.throws(function () {
+			alone({
+				src : 'a'
+			});
+		}, "Missing a destination should throw an error");
+
+		t.throws(function () {
+			alone({
+				src : 'a',
+				dest : 'b'
+			});
+		}, "Missing an engine should throw an error");
+
+		t.throws(function () {
+			alone({
+				src : 'a',
+				dest : 'b',
+				engine : 'NON SENSICAL ENGINE NAME'
+			});
+		}, "Using an uninstalled engine should throw an error");
+
+		t.done();
 	}
 };
