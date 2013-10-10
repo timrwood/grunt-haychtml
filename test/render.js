@@ -1,4 +1,4 @@
-var alone = require("../index"),
+var alone = require("../index").alone,
 	path = require("path"),
 	fs = require("fs");
 
@@ -37,8 +37,7 @@ exports.find = {
 			data : {
 				SOMEKEY : "somevalue"
 			},
-			engine : "swig",
-			done : done
-		});
+			engine : "swig"
+		}, done);
 	}
 };

@@ -180,7 +180,7 @@ npm install --save-dev swig
 
 */
 
-function alone (config) {
+function alone (config, cb) {
 	if (!config.src) {
 		throw new Error("No source directory provided. " +
 			"Set config.src to a directory that contains source templates.");
@@ -201,8 +201,8 @@ function alone (config) {
 
 	function checkRemaining () {
 		remaining--;
-		if (!remaining && config.done) {
-			config.done();
+		if (!remaining && cb) {
+			cb();
 		}
 	}
 
@@ -235,6 +235,11 @@ function alone (config) {
 /*
 Export everything.
 */
-module.exports = alone;
-alone.File = File;
-alone.find = find;
+module.exports = function (grunt) {
+	grunt.registerMultiTask('alone', 'Render standalone static html files.', function() {
+		alone(this.data, this.async());
+	});
+};
+module.exports.File = File;
+module.exports.find = find;
+module.exports.alone = alone;
