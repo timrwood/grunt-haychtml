@@ -1,4 +1,4 @@
-var File = require("../../index").File;
+var File = require("../index").File;
 
 exports.file = {
 	"source" : function (t) {

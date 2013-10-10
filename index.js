@@ -20,8 +20,7 @@ if there is an existing value already.
 */
 
 File.prototype.addData = function (data, force) {
-	var key;
-	for (key in data) {
+	for (var key in data) {
 		if (this.data[key] == undefined || force) {
 			this.data[key] = data[key];
 		}
