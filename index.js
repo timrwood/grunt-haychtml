@@ -79,7 +79,67 @@ function find (dir, extension) {
 
 }
 
-module.exports = {
-	find : find,
-	File : File
-};
+/*
+Given an array of File objects, a destination base path, a global data
+object to apply to each file, and a template rendering engine, render
+all files to their destination.
+*/
+
+function render (files, dest, data, engine) {
+
+}
+
+/*
+This is the main entry point for external use.
+
+* config.src
+The folder in which to find the source files.
+
+* config.dest
+The folder in which to place rendered files.
+
+* config.stripExtension
+Whether or not to strip .html from the source files. See File#dest for
+more info. Defaults to true.
+
+* config.extension
+The source files extenstion. This defaults to .html, but can be changed
+depending on the type of template engine used (e.g. .jade)
+
+* config.engine
+The template engine to use to render the files.
+The template engine must be supported by consolidate.
+
+github.com/visionmedia/consolidate.js
+
+When using a template engine, you should also add that to your package.json
+dependancies with something like the following.
+
+npm install --save-dev jade
+npm install --save-dev swig
+
+*/
+
+function alone (config) {
+	if (!config.src) {
+		throw new Error("No source directory provided. " +
+			"Set config.src to a directory that contains source templates.");
+	}
+	if (!config.dest) {
+		throw new Error("No destination directory provided. " +
+			"Set config.dest to a directory in which to render and save templates.");
+	}
+	if (!config.engine) {
+		throw new Error("No template engine provided. " +
+			"Set config.engine to a consolidate.js supported template engine. " +
+			"You may also want to add it to your package.json.");
+	}
+}
+
+/*
+Export everything.
+*/
+module.exports = alone;
+alone.File = File;
+alone.find = find;
+alone.render = render;
