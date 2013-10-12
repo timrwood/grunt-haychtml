@@ -72,13 +72,17 @@ haychtml.render({
 });
 ```
 
-### src
+### src (required)
 
 The folder in which to find the source files.
 
-### dest
+### dest (required)
 
 The folder in which to place rendered files.
+
+### engine (required)
+The template engine to use to render the files.
+The template engine must be supported by [consolidate.js](https://github.com/visionmedia/consolidate.js/).
 
 ### stripExtension
 
@@ -117,9 +121,5 @@ HaychTML will only render files with this extension.
 
 ### data
 Global data to be passed to each template.
-
-### engine
-The template engine to use to render the files.
-The template engine must be supported by [consolidate.js](https://github.com/visionmedia/consolidate.js/).
 
 ## License : MIT
