@@ -86,10 +86,10 @@ The template engine must be supported by [consolidate.js](https://github.com/vis
 
 ### stripExtension
 
-Whether or not to strip .html from the source files. Defaults to true.
+Whether or not to strip `.html` from the source files. Defaults to `true`.
 
-If stripExtension is true, this will try to save files in a subfolder
-as an index.html file. Because of this transformation, it is possible to
+If `stripExtension` is `true`, this will try to save files in a subfolder
+as an `index.html` file. Because of this transformation, it is possible to
 have two source files that map to the same destination path. If this happens,
 an error will be thrown to help debug.
 
@@ -101,7 +101,7 @@ about.html       > about/index.html
 about/index.html > about/index.html
 ```
 
-If stripExtension is false, the destination path will directly mirror the
+If `stripExtension` is `false`, the destination path will directly mirror the
 source path.
 
 Examples with `stripExtension = false`.
@@ -114,12 +114,13 @@ about/index.html > about/index.html
 
 ### extension
 
-The source files extenstion. This defaults to .html, but can be changed
-depending on the type of template engine used (e.g. .jade).
+The source files extenstion. This defaults to `.html`, but can be changed
+depending on the type of template engine used (e.g. `.jade`).
 
-HaychTML will only render files with this extension.
+Only files with this extension will be rendered.
 
 ### data
+
 Global data to be passed to each template.
 
 ## License : MIT
