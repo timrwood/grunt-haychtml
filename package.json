@@ -1,5 +1,5 @@
 {
-    "name": "alone",
+    "name": "haychtml",
     "version": "0.0.0",
     "description": "Render templates.",
     "author": "Tim Wood <washwithcare@gmail.com> (http://timwoodcreates.com/)",
@@ -8,10 +8,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/timrwood/alone.git"
+        "url": "https://github.com/timrwood/haychtml.git"
     },
     "bugs": {
-        "url": "https://github.com/timrwood/alone/issues"
+        "url": "https://github.com/timrwood/haychtml/issues"
     },
     "licenses" : [
         {

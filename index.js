@@ -46,7 +46,7 @@ about/index.html > about/index.html
 If stripExtension is false, the destination path will directly mirror the
 source path.
 
-Examples with stripExtension = true;
+Examples with stripExtension = false;
 index.html       > index.html
 about.html       > about.html
 about/index.html > about/index.html
@@ -180,7 +180,7 @@ npm install --save-dev swig
 
 */
 
-function alone (config, cb) {
+function render (config, cb) {
 	if (!config.src) {
 		throw new Error("No source directory provided. " +
 			"Set config.src to a directory that contains source templates.");
@@ -244,10 +244,11 @@ function alone (config, cb) {
 Export everything.
 */
 module.exports = function (grunt) {
-	grunt.registerMultiTask('alone', 'Render standalone static html files.', function() {
-		alone(this.data, this.async());
+	grunt.registerMultiTask('haychtml', 'Render static html files.', function() {
+		render(this.data, this.async());
 	});
 };
+
 module.exports.File = File;
 module.exports.find = find;
-module.exports.alone = alone;
+module.exports.render = render;

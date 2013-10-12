@@ -1,4 +1,4 @@
-var alone = require("../index").alone,
+var render = require("../index").render,
 	path = require("path"),
 	fs = require("fs");
 
@@ -31,7 +31,7 @@ exports.find = {
 			t.done();
 		}
 
-		alone({
+		render({
 			src : srcDirname,
 			dest : destDirname,
 			data : {
@@ -43,24 +43,24 @@ exports.find = {
 
 	"throwing errors" : function (t) {
 		t.throws(function () {
-			alone({});
+			render({});
 		}, "Missing a source should throw an error");
 
 		t.throws(function () {
-			alone({
+			render({
 				src : 'a'
 			});
 		}, "Missing a destination should throw an error");
 
 		t.throws(function () {
-			alone({
+			render({
 				src : 'a',
 				dest : 'b'
 			});
 		}, "Missing an engine should throw an error");
 
 		t.throws(function () {
-			alone({
+			render({
 				src : 'a',
 				dest : 'b',
 				engine : 'NON SENSICAL ENGINE NAME'
