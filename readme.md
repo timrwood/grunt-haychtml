@@ -11,7 +11,7 @@ src/index.jade            > dest/index.html
 src/subfolder/index.jade  > dest/subfolder/index.html
 ```
 
-## HatchTML ignores files and folders that start with an underscore.
+## HaychTML ignores files and folders that start with an underscore.
 
 ```
 src/_base.jade             >
