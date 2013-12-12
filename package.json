@@ -1,37 +1,48 @@
 {
-    "name": "haychtml",
-    "version": "0.0.0",
-    "description": "Render templates.",
-    "author": "Tim Wood <washwithcare@gmail.com> (http://timwoodcreates.com/)",
-    "engines": {
-        "node": "*"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/timrwood/haychtml.git"
-    },
-    "bugs": {
-        "url": "https://github.com/timrwood/haychtml/issues"
-    },
-    "licenses" : [
-        {
-            "type" : "MIT"
-        }
-    ],
-    "dependencies" : {
-        "consolidate" : "latest",
-        "mkdirp"      : "latest"
-    },
-    "devDependencies" : {
-        "grunt"                   : "latest",
-        "grunt-contrib-jshint"    : "latest",
-        "grunt-contrib-nodeunit"  : "latest",
-        "grunt-contrib-watch"     : "latest",
-        "nodeunit"                : "latest",
-        "swig"                    : "latest",
-        "jade"                    : "latest"
-    },
-    "scripts": {
-        "test": "grunt"
+  "name": "grunt-haychtml",
+  "description": "A template agnostic static site generator.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/timrwood/grunt-haychtml",
+  "author": {
+    "name": "Tim Wood",
+    "email": "washwithcare@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/timrwood/grunt-haychtml"
+  },
+  "bugs": {
+    "url": "https://github.com/timrwood/grunt-haychtml/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/timrwood/grunt-haychtml/blob/master/LICENSE-MIT"
     }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "consolidate": "~0.9.1",
+    "mkdirp": "~0.3.5"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "swig": "~1.1.0",
+    "jade": "~0.35.0",
+    "grunt": "~0.4.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
 }

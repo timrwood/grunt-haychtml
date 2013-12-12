@@ -1,4 +1,4 @@
-var render = require("../index").render,
+var render = require("../lib/haychtml").render,
 	path = require("path"),
 	fs = require("fs");
 
@@ -24,21 +24,10 @@ exports.find = {
 			);
 		}
 
-		function done () {
-			testFile("index.html");
-			testFile("about/index.html");
+		testFile("index.html");
+		testFile("about/index.html");
 
-			t.done();
-		}
-
-		render({
-			src : srcDirname,
-			dest : destDirname,
-			data : {
-				SOMEKEY : "somevalue"
-			},
-			engine : "swig"
-		}, done);
+		t.done();
 	},
 
 	"throwing errors" : function (t) {

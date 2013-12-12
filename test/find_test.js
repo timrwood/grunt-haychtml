@@ -1,4 +1,4 @@
-var find = require("../index").find,
+var find = require("../lib/haychtml").find,
 	path = require("path");
 
 function keysFromFiles (files) {

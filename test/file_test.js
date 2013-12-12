@@ -1,4 +1,4 @@
-var File = require("../index").File;
+var File = require("../lib/haychtml").File;
 
 exports.file = {
 	"source" : function (t) {
