@@ -1,3 +1,7 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+If you are using this plugin, and would like to take over ownership, please open an issue.
+
 # grunt-haychtml [![Build Status](https://travis-ci.org/timrwood/grunt-haychtml.png?branch=master)](https://travis-ci.org/timrwood/grunt-haychtml)
 
 > A template agnostic static site generator.
